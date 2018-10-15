@@ -1,0 +1,55 @@
+syntax = "proto3";
+package com.christopherfekete.dracs;
+option java_multiple_files = true;
+
+// Implement Proto File Here
+
+// Command to run for python generation
+// python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./Communications.proto
+
+// Bulletin Board Services
+service LinkCommunicator {
+    // Connect and transfer packets
+    rpc CreateEdge(stream Packet) returns (stream Packet) {}
+}
+
+message Packet {
+    oneof content {
+
+    }
+
+    message Header {
+        message RoutingHeader {
+            int32 sourceAddr = 1;
+            int32 sourcePort = 2;
+
+            oneof content {
+
+            }
+
+            message Unicast {
+
+            }
+
+            message Broadcast {
+
+            }
+
+            message Multicast {
+
+            }
+
+            message Anycast {
+
+            }
+
+            message Geocast {
+
+            }
+
+            message Neocast {
+
+            }
+        }
+    }
+}
