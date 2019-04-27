@@ -3,10 +3,11 @@ import threading
 import time
 
 
-from GPIO import InputWatcher
+from .GPIO import InputWatcher
+from .GPIO import GPIO
 
 
-import RPi.GPIO as GPIO
+from pydracs.utils.checks import check_module
 
 
 class BaseButton(abc.ABC):
@@ -31,6 +32,7 @@ class GeneralButton(BaseButton):
                  bouncetime=0,
                  pausetime=0,
                  watcher=None):
+        check_module(GPIO, 'RPi.GPIO')
         self._initialize(channel,
                          state,
                          pull_up_down,

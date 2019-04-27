@@ -1,15 +1,23 @@
 import threading
 
 
-import RPi.GPIO as GPIO
+try:
+    import RPi.GPIO as GPIO
+    GPIO.setmode(GPIO.BCM)
+except ImportError:
+    import warnings
+    warnings.warn('RPi.GPIO is unavailable, install to use module',
+                  category=Warning,
+                  stacklevel=2)
+    GPIO = None
 
 
-# Eventually build controller to control all pins
-GPIO.setmode(GPIO.BCM)
+from pydracs.utils.checks import check_module
 
 
 class Controller:
     def __init__(self, power_pin):
+        check_module(GPIO, 'RPi.GPIO')
         GPIO.setmode(GPIO.BCM)
 
 
@@ -17,6 +25,7 @@ class InputWatcher:
     def __init__(self,
                  channel,
                  pull_up_down=GPIO.PUD_OFF):
+        check_module(GPIO, 'RPi.GPIO')
         GPIO.setup(channel,
                    GPIO.IN,
                    pull_up_down=pull_up_down)
